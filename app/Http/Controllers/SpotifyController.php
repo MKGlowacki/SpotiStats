@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Track;
 use App\Models\SpotifyUser;
-use Illuminate\Support\Facades\Session;
 use SpotifyWebAPI\Session as SpotifySession;
 use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\SpotifyWebAPIException;
@@ -111,7 +110,7 @@ class SpotifyController extends Controller
                     $spotifyUser->save();
                 }
 
-                DB::delete('delete from tracks');
+                DB::delete('delete from tracks where user_id='.auth()->user()->id);
 
                 $i = 1;
                 foreach($top_tracks as $key => $top){
@@ -158,7 +157,6 @@ class SpotifyController extends Controller
                 ->with('tracks_medium', $top_tracks_medium->items)
                 ->with('tracks_long', $top_tracks_long->items);
 
-            
 
         } catch(SpotifyWebAPIException $e){
              
