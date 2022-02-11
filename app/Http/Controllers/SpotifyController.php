@@ -151,16 +151,10 @@ class SpotifyController extends Controller
                 die();
             }
 
-            $result = view('spotify.index')
-                ->with('user',$user_info)
-                ->with('tracks_short', $top_tracks_short->items)
-                ->with('tracks_medium', $top_tracks_medium->items)
-                ->with('tracks_long', $top_tracks_long->items);
-
 
         } catch(SpotifyWebAPIException $e){
              
-            $result = redirect('/');
+            return redirect('/');
             
         }
 
