@@ -9,7 +9,9 @@
         <a class="btn btn-success mb-4" href="/logIn">
             <h2>Połącz ze Spotify</h2>
         </a>
-        
+        @if(!empty($link_error))
+        <h2>{{$link_error}}</h2>
+        @endif
             
     </div>
     @elseif(!empty($user))
@@ -18,12 +20,16 @@
         <a class="btn btn-success mb-4" href="/logIn">
             <h2>Odśwież dane</h2>
         </a>
+        <a class="btn btn-success mb-4" href="/logOut">
+            <h2>Rozłącz</h2>
+        </a>
         <div class="container">
         <img src={{$user->image_url}}><br/>
         Nazwa: {{$user->name}}<br/>
         Email: {{$user->email}}<br/>
         Id: {{$user->id}}<br/>
         <div class="row justify-content-center">
+            
             <h2> Najczęściej słuchane w  ciągu ostatniego miesiąca </h2>
             @foreach($tracks_short as $key => $track)
                 <div class="container">

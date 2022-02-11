@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', [App\Http\Controllers\SpotifyController::class, 'index']);
 Route::get('/logIn', [App\Http\Controllers\SpotifyController::class, 'logIn']);
+Route::get('/logOut', [App\Http\Controllers\SpotifyController::class, 'logOut']);
 
 
 

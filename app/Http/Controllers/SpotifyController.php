@@ -94,10 +94,14 @@ class SpotifyController extends Controller
 
                 $top_tracks = array($top_tracks_short, $top_tracks_medium, $top_tracks_long);
 
-                DB::delete('delete from tracks');
                 
+                
+                
+                if(!empty(DB::select('select id from spotify_users where not user_id='.auth()->user()->id))&&!empty(DB::select('select id from spotify_users where id='.$user_info->id))){
 
-                if(empty(DB::select('select id from spotify_users where id='.$user_info->id))){
+                    return view('spotify.index')->with('link_error','To konto Spotify jest juz przypisane do innego konta SpotiStats');
+                
+                } elseif(empty(DB::select('select id from spotify_users where id='.$user_info->id))){
                     $spotifyUser = new SpotifyUser;
                     $spotifyUser->id = $user_info->id;
                     $spotifyUser->name = $user_info->display_name;
@@ -107,7 +111,7 @@ class SpotifyController extends Controller
                     $spotifyUser->save();
                 }
 
-                
+                DB::delete('delete from tracks');
 
                 $i = 1;
                 foreach($top_tracks as $key => $top){
@@ -158,12 +162,20 @@ class SpotifyController extends Controller
 
         } catch(SpotifyWebAPIException $e){
              
-            $result = redirect('/logIn');
+            $result = redirect('/');
             
         }
 
    
         
+        return redirect('/');
+    }
+
+    public function logOut(){
+
+        DB::delete('delete from tracks where user_id='.auth()->user()->id);
+        DB::delete('delete from spotify_users where user_id='.auth()->user()->id);
+
         return redirect('/');
     }
 
