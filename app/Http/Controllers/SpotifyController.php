@@ -93,13 +93,11 @@ class SpotifyController extends Controller
 
                 $top_tracks = array($top_tracks_short, $top_tracks_medium, $top_tracks_long);
 
-                
-                
-                
-                if(!empty(DB::select('select id from spotify_users where not user_id='.auth()->user()->id))&&!empty(DB::select('select id from spotify_users where id='.$user_info->id))){
+                if(!empty(DB::select('select id from spotify_users where id='.$user_info->id))){
+                    if(!empty(DB::select('select id from spotify_users where not user_id='.auth()->user()->id))){
 
-                    return view('spotify.index')->with('link_error','To konto Spotify jest juz przypisane do innego konta SpotiStats');
-                
+                        return view('spotify.index')->with('link_error','To konto Spotify jest juz przypisane do innego konta SpotiStats');
+                    }
                 } elseif(empty(DB::select('select id from spotify_users where id='.$user_info->id))){
                     $spotifyUser = new SpotifyUser;
                     $spotifyUser->id = $user_info->id;
@@ -143,7 +141,7 @@ class SpotifyController extends Controller
                 $options = [
                     'scope' => [
                         'user-read-email',
-                        'user-top-read'
+                        'user-top-read',
                     ],
                 ];
             
