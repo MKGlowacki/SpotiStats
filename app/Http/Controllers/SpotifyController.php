@@ -64,9 +64,9 @@ class SpotifyController extends Controller
         $session = new SpotifySession(
             //tutaj należy wpisać swoje client ID, client Secret oraz Redirect URL ze strony deweloperskiej Spotify
 
-            'e8813fba4dc3462bb7f024be10a0be89',
-            '6d07ea20bd9443acb46faae7495be365',
-            'http://localhost:8000/logIn'
+            'clientID',
+            'clientSecret',
+            'redirectURL'
         );
         
 
